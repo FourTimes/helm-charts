@@ -1,9 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "charts.fullname" . }}
+  name: {{ include "miga-common-charts.fullname" . }}
   labels:
-    {{- include "charts.labels" . | nindent 4 }}
+{{- if .Values.podLabels}}
+  {{- range $key, $value := .Values.podLabels }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+{{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +16,8 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "charts.selectorLabels" . | nindent 4 }}
+{{- if .Values.podLabels}}
+  {{- range $key, $value := .Values.podLabels }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+{{- end }}
