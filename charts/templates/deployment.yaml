@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name:  {{ include "miga-common-charts.fullname" . }}
+  name:  {{ include "charts.fullname" . }}
   labels:
 {{- if .Values.commonLabels}}
   {{- range $key, $value := .Values.commonLabels }}
@@ -36,7 +36,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "miga-common-charts.serviceAccountName" . }}
+      serviceAccountName: {{ include "charts.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
