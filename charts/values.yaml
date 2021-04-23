@@ -50,6 +50,11 @@ service:
   type: ClusterIP
   port: 80
 
+externalService:
+  name: "esduckduck"
+  externalName: rs-authzs-dep-svc.ressvc.svc.cluster.local
+  ports: 8080
+
 ingress:
   enabled: false
   annotations: {}
