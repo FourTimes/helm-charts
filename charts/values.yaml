@@ -33,18 +33,21 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
+podAnnotations:
+  container.apparmor.security.beta.kubernetes.io/rs-authzs-dep-pod: runtime/default
 
 podSecurityContext: {}
   # fsGroup: 2000
 
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
+  # privileged: false
+  # allowPrivilegeEscalation: false
   # runAsNonRoot: true
   # runAsUser: 1000
+  # capabilities:
+  #   drop:
+  #   - NET_RAW
+  #   - ALL
 
 service:
   type: ClusterIP
@@ -56,7 +59,7 @@ externalService:
   ports: 8080
 
 ingress:
-  enabled: false
+  enabled: true
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
@@ -64,6 +67,10 @@ ingress:
     - host: chart-example.local
       paths:
       - path: /
+        backend:
+          serviceName: chart-example.local
+          servicePort: 80
+      - path: /data
         backend:
           serviceName: chart-example.local
           servicePort: 80
