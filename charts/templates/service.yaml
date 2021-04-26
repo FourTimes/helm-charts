@@ -4,7 +4,7 @@ metadata:
   name: {{ include "charts.fullname" . }}
   labels:
 {{- if .Values.podLabels}}
-  {{- range $key, $value := .Values.podLabels }}
+  {{- range $key, $value := .Values.commonLabels }}
     {{ $key }}: {{ $value | quote }}
   {{- end }}
 {{- end }}
@@ -17,7 +17,7 @@ spec:
       name: http
   selector:
 {{- if .Values.podLabels}}
-  {{- range $key, $value := .Values.podLabels }}
+  {{- range $key, $value := .Values.commonLabels }}
     {{ $key }}: {{ $value | quote }}
   {{- end }}
 {{- end }}
